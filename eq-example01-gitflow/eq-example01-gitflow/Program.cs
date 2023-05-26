@@ -1,7 +1,12 @@
+using eq_example01_gitflow.Interfaces;
+using eq_example01_gitflow.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ICalculable, CalculatorService>();
 
 var app = builder.Build();
 
