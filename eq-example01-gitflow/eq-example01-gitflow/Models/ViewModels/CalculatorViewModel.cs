@@ -2,6 +2,6 @@
 {
     public class CalculatorViewModel : Calculator
     {
-        public string? Operacion { get; set; }
+        public string? Operation { get; set; }
     }
 }
