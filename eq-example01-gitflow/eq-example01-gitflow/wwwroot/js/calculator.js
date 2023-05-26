@@ -1,7 +1,7 @@
 ﻿// Validar el contenido de los campos
 function validarNumero(input) {
-    var valor = input.value;
-    var pattern = /^-?\d*([.]?\d+)?$/;
+    let valor = input.value;
+    let pattern = /^-?\d*([.]?\d+)?$/;
 
     if (!pattern.test(valor)) {
         input.setCustomValidity("Enter a valid number");
@@ -30,32 +30,31 @@ form.addEventListener('submit', function (event) {
     sendData();
 });
 
-function sendData() {
-    var operation = document.querySelector('input[name="operation"]:checked').value;
-    var Number1 = document.getElementById('Number1').value;
-    var Number2 = document.getElementById('Number2').value;
+async function sendData() {
+    try {
+        let operation = document.querySelector('input[name="operation"]:checked').value;
+        let Number1 = document.getElementById('Number1').value;
+        let Number2 = document.getElementById('Number2').value;
 
-    // Verificar si los campos numero1 y numero2 están vacíos y asignarles un valor predeterminado en ese caso
-    Number1 = Number1 === '' ? '0' : Number1;
-    Number2 = Number2 === '' ? '0' : Number2;
+        // Verificar si los campos numero1 y numero2 están vacíos y asignarles un valor predeterminado en ese caso
+        Number1 = Number1 === '' ? '0' : Number1;
+        Number2 = Number2 === '' ? '0' : Number2;
 
-    var data = { operation: operation, Number1: Number1, Number2: Number2 };
+        let data = { operation: operation, Number1: Number1, Number2: Number2 };
 
-    axios.post('/Home/CalculartorAjax', data)
-        .then(function (response) {
-            mostrarResultado('Result: ' + response.data);
-        })
-        .catch(function (error) {
-            console.error('Error en la solicitud: ' + error.response.status);
-            window.location.href = '/Home/Error';
-        });
+        const response = await axios.post('/Home/CalculartorAjax', data);
+        mostrarResultado('Result: ' + response.data);
+    } catch (error) {
+        console.error('Error en la solicitud: ' + error.response.status);
+        window.location.href = '/Home/Error';
+    }
 }
 
 function mostrarResultado(result) {
-    var resultadoElement = document.getElementById('result');
+    let resultadoElement = document.getElementById('result');
     resultadoElement.textContent = result;
 }
 
 // Asociar la función enviarDatos al evento click del botón "Calcular"
-var calcularBtn = document.getElementById('calcularBtn');
+let calcularBtn = document.getElementById('calcularBtn');
 calcularBtn.addEventListener('click', sendData);
