@@ -1,8 +1,57 @@
-﻿@{
+﻿@model eq_example01_gitflow.Models.ViewModels.CalculatorViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+@using (Html.BeginForm("CalculartorAjax", "Home", FormMethod.Post, new { id = "myForm" }))
+{
+    <div class="form-group" style="">
+        <fieldset style="background-color: #FFFFFF; border: 2px solid lightblue; border-radius: 5px; ">
+            <legend>Calculator</legend>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div style="margin-left: 10px;">
+                @Html.RadioButton("operation", "Add", new { id = "rbAdd", @checked = "checked" })
+                @Html.Label("Add")
+            </div>
+            <div style="margin-left: 10px;">
+                @Html.RadioButton("operation", "Subtract", new { id = "rbSubtract" })
+                @Html.Label("Subtract")
+            </div>
+            <div style="margin-left: 10px;">
+                @Html.RadioButton("operation", "Multiply", new { id = "rbMultiply" })
+                @Html.Label("Multiply")
+            </div>
+            <div style="margin-left: 10px; margin-bottom: 10px;">
+                @Html.RadioButton("operation", "Divide", new { id = "rbDivide" })
+                @Html.Label("Divide")
+            </div>
+        </fieldset>
+        <br />
+        <div style="margin-bottom: 5px;">
+            @Html.Label("Number 1:")
+            @Html.TextBox("Number1", "", new { type = "number", step = "any", oninput = "validarNumero(this)", required = "required", id="Number1" })
+            @Html.ValidationMessage("Number1", "", new { @class = "text-danger" })
+        </div>
+        <div style="margin-bottom: 5px;">
+            @Html.Label("Number 2:")
+            @Html.TextBox("Number2", "", new { type = "number", step = "any", oninput = "validarNumero(this)", required = "required", id="Number2" })
+            @Html.ValidationMessage("Number2", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <input type="submit" value="Calcular" class="btn btn-info" id="calcularBtn" />
+}
+
+<p id="result"></p>
+
+@section Scripts{
+   <script src="~/js/calculator.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+
+  

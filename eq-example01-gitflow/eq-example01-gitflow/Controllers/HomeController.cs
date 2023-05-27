@@ -61,7 +61,7 @@ namespace eq_example01_gitflow.Controllers
                         _logger.LogInformation("Performing multiplication operation...");
                         result = calculable.Multiply(data.Number1, data.Number2);
                         break;
-                    case "Dividir":
+                    case "Divide":
                         _logger.LogInformation("Performing division operation...");
                         result = calculable.Divide(data.Number1, data.Number2);
                         break;
